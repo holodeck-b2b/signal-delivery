@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://holodeck-b2b.org/schemas/2015/08/smd"
+    xmlns:tns="http://holodeck-b2b.org/schemas/2015/08/smd">
+
+    <xs:annotation>
+        <xs:documentation><p>This schema defines the XML document structure used by the Holodeck B2B <i>SignalNotifier</i> () delivery method to deliver Signal messages to the business application. It contain the meta-data for the Signal.</p></xs:documentation>
+    </xs:annotation>
+    <xs:import namespace="http://www.w3.org/XML/1998/namespace"
+        schemaLocation="http://www.w3.org/2001/xml.xsd"/>
+    <xs:element name="SignalMessage" type="tns:SignalMessage"/>
+    <xs:complexType name="SignalMessage">
+        <xs:annotation>
+            <xs:documentation xml:lang="en"><p>The structure of this notification resembles the ebMS message header structure. Because notification on Signals does not apply to the PullRequest the PullRequest element is removed as an option for the child of SignalMessage.<br/>
+Also a choice is introduced to reflect that a notification will only be for on specific Signal, i.e. a Receipt or Error.</p></xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="MessageInfo" type="tns:MessageInfo"/>
+            <xs:choice>
+                <xs:element minOccurs="1" name="Receipt" type="tns:Receipt"/>
+                <xs:element maxOccurs="unbounded" minOccurs="1" name="Error" type="tns:Error"/>
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="MessageInfo">
+        <xs:annotation>
+            <xs:documentation><p>MessageInfo contains the general information about the Signal message unit like the time it was created and its messageId.<br/>
+In contrast to the ebMS header the RefToMessageId element is a required child here. This is done because notifications to the business application are only useful if they apply to an earlier submitted message.</p>
+</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element minOccurs="1" name="Timestamp" type="xs:dateTime">
+                <xs:annotation>
+                    <xs:documentation>The timestamp reflect the time when the message header is created (see §5.2.2.1 of the ebMS Core Specification), i.e. when the Signal was created by the sending MSH. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="1" name="MessageId" type="tns:non-empty-string">
+                <xs:annotation>
+                    <xs:documentation/>
+                </xs:annotation>
+            </xs:element>
+            <xs:element minOccurs="1" name="RefToMessageId" type="tns:non-empty-string">
+                <xs:annotation>
+                    <xs:documentation>The reference to the [user message] message unit this signal applies to. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Receipt">
+        <xs:sequence>
+            <xs:any maxOccurs="unbounded" namespace="##other" processContents="lax"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Error">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="Description" type="tns:Description"/>
+            <xs:element minOccurs="0" name="ErrorDetail" type="xs:token"/>
+        </xs:sequence>
+        <xs:attribute name="category" type="xs:token" use="optional"/>
+        <xs:attribute name="refToMessageInError" type="xs:token" use="optional"/>
+        <xs:attribute name="errorCode" type="xs:token" use="required"/>
+        <xs:attribute name="origin" type="xs:token" use="optional"/>
+        <xs:attribute name="severity" type="xs:token" use="required"/>
+        <xs:attribute name="shortDescription" type="xs:token" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="Description">
+        <xs:simpleContent>
+            <xs:extension base="tns:non-empty-string">
+                <xs:attribute ref="xml:lang" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="non-empty-string">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
