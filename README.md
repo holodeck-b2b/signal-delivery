@@ -47,7 +47,7 @@ Please document the steps to reproduce your problem as much as possible.
 Version numbering follows the [Semantic versioning](http://semver.org/) approach.
 
 ##Licensing
-The license used for this extension is the [European Union Public License](https://joinup.ec.europa.eu/community/eupl/home)
+The licence used for this extension is the [European Union Public License](https://joinup.ec.europa.eu/community/eupl/home). 
 Although Holodeck B2B Core is licensed under the General Public License V3 this is possible because this extension only
-uses the **interface module** of the main Holodeck B2B project which is licensed under the Lesser General Public License V3.
+uses the *interface module* of the main Holodeck B2B project which is licensed under the Lesser General Public License V3.
 
