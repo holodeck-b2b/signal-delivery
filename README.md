@@ -9,8 +9,8 @@ used for sending User Messages.
 __________________
 For more information on using Holodeck B2B visit the website at http://holodeck-b2b.org  
 Developer: Sander Fieten  
-Code hosted at https://github.com/holodeck-b2b/
-Issue tracker https://github.com/holodeck-b2b/Holodeck-B2B/issues  
+Code hosted at https://github.com/holodeck-b2b/signal-delivery
+Issue tracker https://github.com/holodeck-b2b/signal-delivery/issues  
 
 ##Installation 
 ###Prerequisites
@@ -21,6 +21,7 @@ The jar file should be copied into the `lib` directory of the Holodeck B2B insta
 ###Configuration
 Delivery methods are configured in the P-Mode. To enable this signal delivery method set the `DeliveryMethod` element
 to `org.holodeckb2b.delivery.signals.file.SignalNotifier`. The delivery method has two parameters:
+
 1. _deliveryDirectory_ : should contain the path where the files containing the signal meta-data should be written to;
 2. _includeReceiptContent_ : indicate whether the complete content of a _Receipt_ signal should be included in the output 
 or only the first child element. This is an optional parameter with default value _false_.
