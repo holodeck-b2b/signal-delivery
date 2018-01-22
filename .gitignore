@@ -28,8 +28,12 @@ target/
 *.sqlite
 db/
 
-# Config files       #
+# IDE generated files #
 ######################
+/.project
+/.settings/
+*.iml
+/.idea
 nb-configuration.xml
 
 # OS generated files #
@@ -41,11 +45,3 @@ nb-configuration.xml
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-/.project
-/.settings/
-
-*.iml
-/.idea
-/modules/holodeckb2b-core/nbproject/
-/modules/holodeckb2b-persistency/nbproject/
