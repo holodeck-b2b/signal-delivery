@@ -13,12 +13,16 @@
     <name>Holodeck B2B Signal Delivery</name>
     <description>
         This project is an exmaple of how an additional delivery method can be implemented. The delivery method
-        created is specific for Signal messages and uses a simplified XML schema definition for the notification 
+        created is specific for Signal messages and uses a simplified XML schema definition for the notification
         messages.
     </description>
+    <scm>
+        <url>https://github.com/holodeck-b2b/signal-delivery</url>
+        <connection>scm:git:https://github.com/holodeck-b2b/signal-delivery.git</connection>
+    </scm>
     <organization>
         <name>The Holodeck B2B Team</name>
-        <url>http://www.holodeck-b2b.org/team</url>        
+        <url>http://www.holodeck-b2b.org/team</url>
     </organization>
     <developers>
         <developer>
@@ -58,28 +62,35 @@
                     <catalog>src/main/resources/jaxb/catalog.xml</catalog>
                     <catalogResolver>org.jvnet.jaxb2.maven2.resolver.tools.ClasspathCatalogResolver</catalogResolver>
                     <generateDirectory>${project.build.directory}/generated-sources/xjc</generateDirectory>
-                    <verbose>true</verbose>                    
+                    <verbose>true</verbose>
                 </configuration>
             </plugin>
         </plugins>
     </build>
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>org.holodeckb2b</groupId>
             <artifactId>holodeckb2b-interfaces</artifactId>
             <version>2.0.0</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Axiom is needed because the content of the Receipt is represented in Axiom elements and needs
+             to converted to include it in the notification -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>1.7.20</version>
+            <groupId>org.apache.ws.commons.axiom</groupId>
+            <artifactId>axiom-api</artifactId>
+            <!-- Make sure that the Axiom version used here is in sync with the one used by the Holodeck B2B
+                 version this lib is used with -->
+            <version>1.2.14</version>
         </dependency>
+        <!-- Log4j is used for logging -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.20</version>
-            <scope>runtime</scope>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <!-- Make sure that the Log4j version used here is in sync with the one used by the Holodeck B2B
+                 version this lib is used with -->
+            <version>2.6.2</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>
