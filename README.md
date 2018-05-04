@@ -1,4 +1,4 @@
-# Holodeck B2B Signal Notification
+# Holodeck B2B Signal Delivery
 This project is an example of a custom extension to the Holodeck B2B Core platform. It implements a _message delivery
 method_ for ebMS Signal message units.
 The ebMS data from the Signal messages is written to an XML document using the same structure as the ebMS header. A
