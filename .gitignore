@@ -35,6 +35,7 @@ db/
 *.iml
 /.idea
 nb-configuration.xml
+.classpath
 
 # OS generated files #
 ######################
