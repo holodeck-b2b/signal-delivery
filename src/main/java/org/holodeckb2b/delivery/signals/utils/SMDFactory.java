@@ -17,12 +17,14 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.axiom.om.OMAttribute;
 import org.apache.axiom.om.OMElement;
 import org.apache.axiom.om.OMNode;
@@ -36,6 +38,7 @@ import org.holodeckb2b.interfaces.general.IDescription;
 import org.holodeckb2b.interfaces.messagemodel.IEbmsError;
 import org.holodeckb2b.interfaces.messagemodel.IErrorMessage;
 import org.holodeckb2b.interfaces.messagemodel.IReceipt;
+import org.holodeckb2b.interfaces.messagemodel.ISignalMessage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -46,6 +49,21 @@ import org.w3c.dom.Element;
  */
 public class SMDFactory {
     
+    /**
+     * Creates a new {@link SignalMessage} object based on the given Holodeck B2B Signal message. When the signal is a
+     * Receipt only its content's first child element is included in the XML representation.
+     * 
+     * @param error    The meta-data about the signal message unit
+     * @return         The new {@link SignalMessage} containing the signal meta-data for the given signal
+     * @since 1.1.0
+     */	
+	public static SignalMessage createSMD(final ISignalMessage signal) {
+		if (signal instanceof IErrorMessage)
+			return createSMD((IErrorMessage) signal);
+		else
+			return createSMD((IReceipt) signal);
+	}
+	
     /**
      * Creates a new {@link SignalMessage} object based on the given Holodeck B2B Error signal message.
      * 
@@ -147,10 +165,10 @@ public class SMDFactory {
         if (includeFullContent) {
             // Copy all child elements of the Receipt
             for (OMElement e : rcptContent)
-                content.add(convertElement(e, doc));
+                content.add(convertElement(e, doc, true));
         } else {
             // Only the first child element of the Receipt needs to be included
-            content.add(convertElement(rcptContent.get(0), doc));            
+            content.add(convertElement(rcptContent.get(0), doc, false));            
         }
         
         // Add Receipt info to SignalMessage
@@ -179,11 +197,12 @@ public class SMDFactory {
     /**
      * Helper method to convert an Axiom {@link OMElement} to a W3 DOM representation.
      * 
-     * @param e     The Axiom representation of the element
-     * @param doc   The W3 Document in which the DOM representation is to be inserted
+     * @param e     	The Axiom representation of the element
+     * @param doc   	The W3 Document in which the DOM representation is to be inserted
+     * @param deepCopy 	Indicates whether the child elements should be included in the converted element
      * @return      The converted element
      */
-    private static Element convertElement(OMElement e, Document doc) {
+    private static Element convertElement(OMElement e, Document doc, boolean deepCopy) {
         // Convert the element itself
         Element d = doc.createElementNS(e.getNamespaceURI(), e.getLocalName());
         String prefix = e.getPrefix();
@@ -199,14 +218,16 @@ public class SMDFactory {
             else
                 d.setAttribute(a.getLocalName(), a.getAttributeValue());
         }
-        // And convert all content child nodes, calling this method recursively for child elements
-        Iterator<OMNode> content = e.getChildren();
-        while (content.hasNext()) {
-            OMNode n = content.next();
-            if (n instanceof OMElement)
-                d.appendChild(convertElement((OMElement) n, doc));
-            else if (n instanceof OMText)
-                d.appendChild(doc.createTextNode(((OMText) n).getText()));
+        if (deepCopy) {
+	        // And convert all content child nodes, calling this method recursively for child elements
+	        Iterator<OMNode> content = e.getChildren();
+	        while (content.hasNext()) {
+	            OMNode n = content.next();
+	            if (n instanceof OMElement)
+	                d.appendChild(convertElement((OMElement) n, doc, true));
+	            else if (n instanceof OMText)
+	                d.appendChild(doc.createTextNode(((OMText) n).getText()));
+	        }
         }
             
         return d;
