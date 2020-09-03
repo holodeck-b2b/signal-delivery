@@ -7,9 +7,9 @@ As this delivery method is only able to process Signal message units it should o
 used for sending User Messages.
 
 __________________
-For more information on using Holodeck B2B visit the website at http://holodeck-b2b.org
-Developer: Sander Fieten
-Code hosted at https://github.com/holodeck-b2b/signal-delivery
+For more information on using Holodeck B2B visit the website at http://holodeck-b2b.org  
+Developer: Sander Fieten  
+Code hosted at https://github.com/holodeck-b2b/signal-delivery  
 Issue tracker https://github.com/holodeck-b2b/signal-delivery/issues
 
 ## Installation
