@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## 1.1.1
+##### 2021-11-22
+### Added
+* JAXB dependencies to enable building and running on Java 9 or later.
+
 ## 1.1.0
 ##### 2020-09-03
 ### Added

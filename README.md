@@ -17,7 +17,7 @@ Copy the jar file into the `lib` directory of the Holodeck B2B installation **be
 
 ### Prerequisites
 This extension has no specific requirements and can be installed in any Holodeck B2B version 2.0.0 or later running on
-Java 7 or later.
+Java 7 or later. When running on Java 9 or later a JAXB implementation needs to added to deployment too. 
 
 ### Configuration
 Delivery methods are configured in the P-Mode.
