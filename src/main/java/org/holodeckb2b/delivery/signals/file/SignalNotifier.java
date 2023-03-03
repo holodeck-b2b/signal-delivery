@@ -13,7 +13,9 @@
 */ 
 package org.holodeckb2b.delivery.signals.file;
 
+import java.util.AbstractMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.holodeckb2b.backend.file.NotifyOperation;
@@ -27,7 +29,9 @@ public class SignalNotifier extends NotifyOperation {
 
 	@Override
 	public void init(Map<String, ?> settings) throws MessageDeliveryException {
-		LogManager.getLogger().warn("org.holodeckb2b.delivery.signals.SignalNotifier is deprecated! Use org.holodeckb2b.backend.file.NotifyOperation instead");
-		super.init(settings);
+		LogManager.getLogger().warn("org.holodeckb2b.delivery.signals.SignalNotifier is deprecated! Use org.holodeckb2b.backend.file.NotifyOperation instead");		
+		super.init(settings.entrySet().stream().map(e -> "deliveryDirectory".equals(e.getKey()) ?
+													new AbstractMap.SimpleEntry<>("targetDirectory", e.getValue()) : e)
+							.collect(Collectors.toMap(r -> r.getKey(), r -> r.getValue())));
 	}	   
 }

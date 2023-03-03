@@ -44,7 +44,7 @@ import org.holodeckb2b.interfaces.messagemodel.IReceipt;
  * <p>The XML format of the meta data document is based on the ebMS header for signals and is defined in the 
  * <code>http://holodeck-b2b.org/schemas/2015/08/smd</code> xml schema definition.
  * <p>The delivery method takes two parameters:<ol>
- * <li><i>deliveryDirectory</i> : the path to the directory where the SMD files should be written.</li>
+ * <li><i>targetDirectory</i> : the path to the directory where the SMD files should be written.</li>
  * <li><i>includeReceiptContent</i> : a boolean that indicate whether the complete Receipt content from the ebMS message
  * should be included (<i>"true"</i>) or only the first child element (<i>"false"</i>). Default is <i>false</i> (only
  * first child included).</li>
@@ -78,7 +78,7 @@ public class NotifyOperation implements IDeliveryMethod {
         
         if (settings != null) {
             try {
-               deliveryDir = (String) settings.get("deliveryDirectory");                
+               deliveryDir = (String) settings.get("targetDirectory");                
                includeRcptCont = (String) settings.get("includeReceiptContent");
             } catch (ClassCastException ex) {
                 throw new MessageDeliveryException("Configuration error! No directory specified!");
@@ -86,7 +86,7 @@ public class NotifyOperation implements IDeliveryMethod {
         }        
         if (!checkDirectory())
             throw new MessageDeliveryException("Configuration error! Specified directory [" + deliveryDir
-                                                                        + " is not available!");
+                                                                        + "] is not available!");
         // Ensure directory path ends with separator
         deliveryDir = (deliveryDir.endsWith(FileSystems.getDefault().getSeparator()) ? deliveryDir 
                               : deliveryDir + FileSystems.getDefault().getSeparator());

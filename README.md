@@ -21,12 +21,17 @@ install a JAXB implementation when running on Java 9 or later.
 
 ### Configuration
 Delivery methods are configured in the P-Mode.
-To enable this signal delivery method set the `DeliveryMethod` element to `org.holodeckb2b.delivery.signals.file.SignalNotifier`.
+To enable this signal delivery method set the `DeliveryMethod` element to `org.holodeckb2b.backend.file.NotifyOperation`.
 The delivery method has two parameters:
 
-1. _deliveryDirectory_ : should contain the path where the files containing the signal meta-data should be written to;
+1. _targetDirectory_ : should contain the path where the files containing the signal meta-data should be written to;
 2. _includeReceiptContent_ : indicates whether the complete content of a _Receipt_ signal should be included in the output
-or only the first child element. This is an optional parameter with default value _false_.
+or only the first child element. This is an optional parameter with default value _false_.  
+
+#### Migration
+For backward compatibility the old class `org.holodeckb2b.delivery.signals.file.SignalNotifier` and _deliveryDirectory_ 
+parameter can still be used. However it is recommended to change your P-Modes to the new class and parameter names as
+support for the old names may be removed in the next version.
 
 ## Contributing
 We’re using the simplified Github workflow to accept modifications which means you’ll have to:
