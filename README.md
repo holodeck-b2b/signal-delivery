@@ -3,8 +3,8 @@ This project is an example of a custom extension to the Holodeck B2B Core platfo
 method_ for ebMS Signal message units.
 The ebMS data from the Signal messages is written to an XML document using the same structure as the ebMS header. A
 simple XML schema definition is provided for "cleaner" generated code for XML processing.
-As this delivery method is only able to process Signal message units it should only be used in One-Way P-Modes that are
-used for sending User Messages.
+As this delivery method is only able to process Signal message units it should only be used in Leg configurations that
+ are used for sending User Messages.
 
 __________________
 For more information on using Holodeck B2B visit the website at http://holodeck-b2b.org  
@@ -16,8 +16,8 @@ Issue tracker https://github.com/holodeck-b2b/signal-delivery/issues
 Copy the jar file into the `lib` directory of the Holodeck B2B installation **before** the server is started.
 
 ### Prerequisites
-This extension has no specific requirements and can be installed in any Holodeck B2B version 2.0.0 or later running on
-Java 7 or later. When running on Java 9 or later a JAXB implementation needs to added to deployment too. 
+This extension can be installed in Holodeck B2B version 6.x. As it uses JAXB for XML processing you will need to
+install a JAXB implementation when running on Java 9 or later. 
 
 ### Configuration
 Delivery methods are configured in the P-Mode.
